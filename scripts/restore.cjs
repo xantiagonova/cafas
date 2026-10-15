@@ -1,0 +1,2 @@
+const fs=require('node:fs');const {db}=require('../server/db.cjs');const {importRows}=require('../server/transfer.cjs');
+(async()=>{if(!process.argv[2])throw Error('Uso: npm run restore -- archivo.json');const input=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));if(input.format!=='cafas-postgres-v1')throw Error('Formato no válido.');await importRows(input.tables);console.log('Restauración completada; usuarios e historial conservados. Las sesiones anteriores no se restauran.')})().catch(e=>{console.error(e.message);process.exitCode=1}).finally(()=>db.close());

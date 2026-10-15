@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS users(document TEXT PRIMARY KEY,name TEXT NOT NULL,sex TEXT NOT NULL,height DOUBLE PRECISION,weight DOUBLE PRECISION,age INTEGER,rank TEXT DEFAULT '',can_evaluate INTEGER NOT NULL DEFAULT 0,password_hash TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS evaluations(id TEXT PRIMARY KEY,document TEXT NOT NULL REFERENCES users(document),evaluator TEXT NOT NULL REFERENCES users(document),number INTEGER NOT NULL CHECK(number BETWEEN 1 AND 4),status TEXT NOT NULL CHECK(status IN ('Pendiente','Aprobado')),payload TEXT NOT NULL,created_at TEXT NOT NULL);
+CREATE UNIQUE INDEX IF NOT EXISTS one_pending_per_person ON evaluations(document) WHERE status='Pendiente';
+CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY,document TEXT NOT NULL REFERENCES users(document),csrf TEXT NOT NULL,expires BIGINT NOT NULL);
+CREATE TABLE IF NOT EXISTS audit(id BIGSERIAL PRIMARY KEY,actor TEXT,action TEXT,target TEXT,created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS login_attempts(key TEXT PRIMARY KEY,attempts INTEGER NOT NULL,expires BIGINT NOT NULL);
+CREATE TABLE IF NOT EXISTS personal(document TEXT PRIMARY KEY REFERENCES users(document),payload TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS metadata(key TEXT PRIMARY KEY,value TEXT NOT NULL);

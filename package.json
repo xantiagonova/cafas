@@ -1,0 +1,24 @@
+{
+  "name": "cafas-render-gratis",
+  "private": true,
+  "version": "1.1.0",
+  "scripts": {
+    "build": "node scripts/build-web.mjs",
+    "test": "node tests/server.cjs && node tests/ui.mjs && node tests/transfer.cjs",
+    "start": "node server/index.cjs",
+    "backup": "node scripts/backup.cjs",
+    "restore": "node scripts/restore.cjs",
+    "migrate:sqlite": "node scripts/import-sqlite.cjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.10",
+    "esbuild": "0.25.12",
+    "happy-dom": "20.14.5"
+  },
+  "engines": {
+    "node": ">=24.19.0 <25"
+  },
+  "dependencies": {
+    "pg": "^8.23.1"
+  }
+}

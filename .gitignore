@@ -1,0 +1,10 @@
+node_modules/
+data/
+backups/
+.env
+*.sqlite-wal
+*.sqlite-shm
+cafas-backup-*.json
+*.sqlite
+.env.*
+!.env.example
